@@ -1,5 +1,5 @@
 FactoryBot.define do  
   factory :item do
-    item_name "Test Item"
+    item_name { Faker::Appliance.equipment }
   end
 end
