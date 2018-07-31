@@ -6,8 +6,6 @@ class CreateItems < ActiveRecord::Migration[5.2]
       t.float :lng
       t.text :item_url
       t.text :img_urls
-
-      t.timestamps
     end
   end
 end
