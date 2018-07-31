@@ -13,11 +13,12 @@
 ActiveRecord::Schema.define(version: 2018_07_31_203706) do
 
   create_table "items", force: :cascade do |t|
-    t.string "item_name"
+    t.string "item_name", null: false
     t.float "lat"
     t.float "lng"
     t.text "item_url"
     t.text "img_urls"
+    t.index ["item_name"], name: "index_items_on_item_name"
   end
 
 end
