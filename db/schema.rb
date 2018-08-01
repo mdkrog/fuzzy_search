@@ -18,7 +18,11 @@ ActiveRecord::Schema.define(version: 2018_07_31_203706) do
     t.float "lng"
     t.text "item_url"
     t.text "img_urls"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["item_name"], name: "index_items_on_item_name"
+    t.index ["lat"], name: "index_items_on_lat"
+    t.index ["lng"], name: "index_items_on_lng"
   end
 
 end
