@@ -12,6 +12,8 @@ gem 'puma', '~> 3.11'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'seed_dump'
+gem 'geokit-rails'
+gem 'string-similarity'
 
 
 group :development, :test do
@@ -33,3 +35,5 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
+
+gem 'rack-mini-profiler'
