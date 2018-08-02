@@ -1,0 +1,1 @@
+class EmptyQueryError < StandardError; end

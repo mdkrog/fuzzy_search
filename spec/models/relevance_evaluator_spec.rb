@@ -23,14 +23,14 @@ RSpec.describe Item, type: :model do
       expect(score).to eq(10)
     end
 
-    it "scores 0/10 on terrible match" do
+    it "scores close to 0/10 on terrible match" do
       fat_lama_office_loc = [51.529524, -0.042223]
       item = build(:item, item_name: "Apple", lat: 51.454513, lng: -2.587910) # bristol
       
       evaluator = RelevanceEvaluator.new("N", fat_lama_office_loc)
       score = evaluator.score(item)
       
-      expect(score).to eq(0)
+      expect(score > 0 && score < 1).to be true
     end
   end
 end

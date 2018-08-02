@@ -9,7 +9,10 @@ class RelevanceEvaluator
   end
 
   def score(item)
-    (term_similarity_rating(item.item_name) * term_similarity_weighting) + (closeness_rating(item) * closeness_weighting)
+    score = 0
+    score += term_similarity_rating(item.item_name) * term_similarity_weighting if search_term
+    score += closeness_rating(item) * closeness_weighting if origin
+    score
   end
 
   private
@@ -23,7 +26,8 @@ class RelevanceEvaluator
   end
 
   def closeness_rating(item)
-    case distance_to(item).to_i
+    dist = distance_to(item)
+    case dist.to_i
     when 0..1 # within 2km
       1
     when 2..4 # within 5km
@@ -33,7 +37,7 @@ class RelevanceEvaluator
     when 11..20 # within 20km
       0.3
     else
-      0
+      1/dist
     end
   end
 end

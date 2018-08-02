@@ -24,7 +24,7 @@ class Item < ApplicationRecord
 
   def self.nearby(origin:, radius: nil)
     if radius
-      within(radius*2, origin: origin)
+      within(radius, origin: origin)
     else
       by_distance(origin: origin)
     end

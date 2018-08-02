@@ -70,5 +70,34 @@ RSpec.describe ItemSearch, type: :model do
       expect(Item).to_not have_received(:nearby)
       expect(result).to eq({error: "No queriable fields provided"})
     end
+
+    it "defaults to 20 when limit not an integer" do
+      searcher = ItemSearch.new(limit: 'hello')
+      
+      expect(searcher.limit).to eq(20)
+    end
+
+    it "malformed lat and lng" do
+      allow(Item).to receive_messages(fuzzy_search: Item, nearby: Item)
+      searcher = ItemSearch.new(search_term: "e", lat: "hello", lng: "hello")
+      
+      searcher.call
+
+      expect(Item).to_not have_received(:nearby)
+    end
+
+    it "it sorts results in from highest score to" do
+      create_list(:item, 30)
+
+      searcher = ItemSearch.new(search_term: "e", lat: 51.4803848, lng: -0.0937642008)
+      evaluator = searcher.relevance_evaluator
+      
+      items = searcher.call
+
+      first_item_score = evaluator.score(items.first)
+      last_item_score = evaluator.score(items.last)
+
+      expect(first_item_score >= last_item_score).to be true
+    end
   end
 end
