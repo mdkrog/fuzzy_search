@@ -39,7 +39,7 @@ class ItemSearch
   end
 
   def sort_and_truncate(results)
-    results.sort_by{ |item| relevance_evaluator.score(item) }.reverse.slice(0, limit)
+    results.sort_by{ |item| relevance_evaluator.score(item) }.reverse.slice(0, limit).map{ |item| [relevance_evaluator.score(item), item.distance_to(origin, units: :kms), item.item_name] }
   end
 
   def origin

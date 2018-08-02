@@ -22,22 +22,23 @@ class RelevanceEvaluator
   end
 
   def distance_to(item)
-    item.distance_to(origin)
+    item.distance_to(origin, units: :kms)
   end
 
   def closeness_rating(item)
     dist = distance_to(item)
-    case dist.to_i
-    when 0..1 # within 2km
+    score = case
+    when dist < 2 # within 2km
       1
-    when 2..4 # within 5km
+    when dist < 5 # within 5km
       0.8
-    when 4..9 # within 10km
+    when dist < 10 # within 10km
       0.6
-    when 11..20 # within 20km
+    when dist < 20 # within 20km
       0.3
     else
-      1/dist
+      0
     end
+    score += 1/dist
   end
 end

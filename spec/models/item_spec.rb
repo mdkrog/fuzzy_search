@@ -22,7 +22,7 @@ RSpec.describe Item, type: :model do
         fat_lama_office_loc = [51.529524, -0.042223]
         create(:item, item_name: "Rosetta Stone", lat: 51.529523, lng: -0.042224)
   
-        items = Item.nearby(origin: fat_lama_office_loc, radius: 5)
+        items = Item.nearby(origin: fat_lama_office_loc, radius: 4)
 
         expect(items.count).to eq(1)
         expect(items.first.item_name).to eq("Rosetta Stone")
