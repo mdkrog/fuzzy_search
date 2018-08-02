@@ -7,6 +7,7 @@ class V1::ItemsController < ApplicationController
                               limit: params[:limit])
     @items = searcher.call
 
+    expires_in 3.minutes, public: true
     render json: @items
   end
 end

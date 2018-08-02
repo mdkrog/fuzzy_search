@@ -29,7 +29,7 @@ class ItemSearch
     scopes = []
     scopes << [:item_name_search, search_term] if search_term
     scopes << [:nearby, origin: origin, radius: radius] if origin    
-    scopes << [:limit, 200] if scopes.any? # get a large set to later sort and truncate down to limit in ruby
+    scopes << [:limit, 100] if scopes.any? # get a large set to later sort and truncate down to limit in ruby
     scopes
   end
 
