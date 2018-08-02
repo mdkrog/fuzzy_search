@@ -12,7 +12,7 @@ class ItemSearch
 
   def call
     begin
-      results = run_query(build_query)
+      results = run_query(build_query)      
       sort_and_truncate(results)
     rescue EmptyQueryError => e
       { error: e.message }
@@ -27,9 +27,9 @@ class ItemSearch
 
   def build_query
     scopes = []
-    scopes << [:fuzzy_search, search_term] if search_term
+    scopes << [:item_name_search, search_term] if search_term
     scopes << [:nearby, origin: origin, radius: radius] if origin    
-    scopes << [:limit, 100] if scopes.any? # get a large set to later sort and truncate down to limit in ruby
+    scopes << [:limit, 200] if scopes.any? # get a large set to later sort and truncate down to limit in ruby
     scopes
   end
 
@@ -39,7 +39,7 @@ class ItemSearch
   end
 
   def sort_and_truncate(results)
-    results.sort_by{ |item| relevance_evaluator.score(item) }.reverse.slice(0, limit).map{ |item| [relevance_evaluator.score(item), item.distance_to(origin, units: :kms), item.item_name] }
+    results.sort_by{ |item| relevance_evaluator.score(item) }.reverse.slice(0, limit)
   end
 
   def origin

@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2018_07_31_203706) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "items", force: :cascade do |t|
     t.string "item_name", null: false
     t.float "lat"

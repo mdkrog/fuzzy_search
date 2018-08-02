@@ -8,7 +8,7 @@ RSpec.describe 'Search API', type: :request do
   # Test suite for GET /search
   describe 'GET v1/search' do
     it 'returns only 20 items by default' do
-      get '/v1/search?searchTerm=e'
+      get '/v1/search?lat=51.529524&lng=-0.042223'
       # Note 'json' is a custom helper to parse JSON responses
       expect(json).not_to be_empty
       expect(json.size).to eq(20)
@@ -42,8 +42,14 @@ RSpec.describe 'Search API', type: :request do
       expect(json.size).to eq(1)
     end
 
-    it 'should return the only 3 items based on limit param' do      
-      get '/v1/search?searchTerm=l&limit=3'
+    it 'should return the only 3 items based on limit param' do    
+      create(:item, item_name: "Ancient Scroll") # within 1km of fat lama
+      create(:item, item_name: "Ancient Book") # within 1km of fat lama
+      create(:item, item_name: "Ancient Manuscript") # within 1km of fat lama
+      create(:item, item_name: "Ancient Jar") # within 1km of fat lama
+
+      
+      get '/v1/search?searchTerm=ancient&limit=3'
  
       expect(json.size).to eq(3)
     end

@@ -62,11 +62,20 @@ RSpec.describe Item, type: :model do
       end
 
       it "excludes items that don't have any match" do
-        create(:item, item_name: "Bat mobile")
+        create(:item, item_name: "Bear")
         create(:item, item_name: "Light Saber")
         create(:item, item_name: "Camera Lighting Studio")
 
-        items = Item.fuzzy_search("light saber")
+        items = Item.fuzzy_search("lig")
+
+        expect(items.count).to eq(2)
+      end
+
+      it "matches both lighting and lighter when searching for light" do
+        create(:item, item_name: "Lighter")
+        create(:item, item_name: "Lighting")
+
+        items = Item.fuzzy_search("light")
 
         expect(items.count).to eq(2)
       end

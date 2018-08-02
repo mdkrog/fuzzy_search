@@ -29,7 +29,7 @@ class RelevanceEvaluator
     dist = distance_to(item)
     score = case
     when dist < 2 # within 2km
-      1
+      1 - (1/dist)
     when dist < 5 # within 5km
       0.8
     when dist < 10 # within 10km
@@ -37,8 +37,8 @@ class RelevanceEvaluator
     when dist < 20 # within 20km
       0.3
     else
-      0
+      0.1
     end
-    score += 1/dist
+    score + (1/dist)
   end
 end
