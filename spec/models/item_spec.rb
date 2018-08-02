@@ -12,7 +12,7 @@ RSpec.describe Item, type: :model do
   end
 
   describe "scopes" do  
-    describe "nearby" do
+    describe ".nearby" do
       before :each do
         create(:item, item_name: "Teddy Bear", lat: 51.516674, lng: -0.176933) # paddington station (5.86km)
         create(:item, item_name: "Camera", lat: 51.454513, lng: -2.587910) # bristol (109.8 km)
@@ -38,7 +38,7 @@ RSpec.describe Item, type: :model do
       end
     end
 
-    describe "fuzzy_search" do
+    describe ".fuzzy_search" do
       it "is case-insensitive when finding items" do  
         create(:item, item_name: "Camera")
         

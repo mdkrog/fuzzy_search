@@ -7,18 +7,9 @@ class Item < ApplicationRecord
                    lat_column_name: :lat,
                    lng_column_name: :lng
   
-
-  # def similarity(search_term)
-  #   String::Similarity.cosine(self.item_name, search_term)
-  # end
-
-  # def distance_score(search_term)
-  #   String::Similarity.cosine(self.item_name, search_term)
-  # end
-
-  # def score(origin, search_term)
-  #   # self.where(score: 10)
-  # end
+  def self.send_chain(methods)
+    Array(methods).inject(self) { |o, a| o.send(*a) }
+  end
   
   def self.fuzzy_search(search_string)
     keywords_list = search_string.split(/[\s.,-]+/).map{ |item| "%" + item + "%" }
@@ -28,14 +19,14 @@ class Item < ApplicationRecord
       where_clause += " OR " if i < keywords_list.length - 1
     end
 
-    where(where_clause, *keywords_list).limit(2)
+    where(where_clause, *keywords_list)
   end
 
   def self.nearby(origin:, radius: nil)
     if radius
-      self.within(radius*2, origin: origin)
+      within(radius*2, origin: origin)
     else
-      self.by_distance(origin: origin)   
+      by_distance(origin: origin)
     end
   end
 end
