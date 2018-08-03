@@ -12,7 +12,7 @@ class Item < ApplicationRecord
   # fuzzy search that utilizes postgres fulltext capabilities
   pg_search_scope :item_name_search, against: [:item_name], using: {tsearch: {dictionary: "english", prefix: true, any_word: true}}  
   
-  # trivial fuzzy search - not utilising full text search
+  # niave fuzzy search - not utilising full text search
   def self.fuzzy_search(search_string)
     keywords_list = search_string.split(/[\s.,-]+/).map{ |item| "%" + item + "%" }
     where_clause = ""
